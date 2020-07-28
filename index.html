@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- 
+File: index.html
+Name: Joe Happ
+Date: 2020 - 07 - 27
+Desc: Program for DnD info and actions
+-->
+<html>
+    <div>
+    <head>
+        <title>DnD Program</title>
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <link rel="stylesheet" href="fontawesome/css/all.css">
+    </head>
+
+    <body>
+        <div class="container">
+        <div class="row">
+            <div class="col-md">
+            <h1>Actions</h1>
+            <input id="aName" placeholder="Action Name" type="text"><br>
+            <input id="aAMod" placeholder="Attack Mod" type="number">
+            <input id="aAType" placeholder="Attack Type" type="text">
+            <input id="aRange" placeholder="Range" type="number"><br>
+            <input id="aCCMod" placeholder="Crit Confirm Mod" type="number">
+            <input id="aCMult" placeholder="Crit Mult" type="number">
+            <input id="aCRange" placeholder="Crit Range" type="number"><br>
+            <input id="aDMod" placeholder="Dam Mod" type="number"><br>
+            <input id="aDNum" placeholder="Num" type="number">
+            <p>d</p>
+            <input id="aDType" placeholder="Type" type="number">
+            <button>+</button>
+            <input type="radio" name="MultRad" id="rad">
+            <label for="rad" id="radLabel">Multiply on Crit</label>
+            <p id="diceDisp"></p>
+            <button>Clear Dice</button>
+            <br><input id="aEffects" placeholder="Extra Effects" type="text"><br>
+            <button>Save</button>
+            <button>Roll Attack</button>
+            <button>Roll Dam</button>
+            <button>End Action</button>
+            <p id="toHitDisp"></p>
+            <p id="critDisp"></p>
+            <p id="damDisp"></p>
+            <p id="totalDisp"></p>
+            <button>Add Action</button>
+            </div>
+
+            <div class="col-md">
+                <h1>Information</h1>
+            </div>
+
+            <div class="col-md">
+                <h1>Resources</h1>
+                <input id="rName" placeholder="Resource Name" type="text"><br>
+                <input id="rCurrent" placeholder="Current Value" type="number">
+                <p>/</p>
+                <input id="rMax" placeholder="Maximum Value" type="number">
+                <button>Add Resource</button>
+            </div>
+            </div>
+        </div>
+        <script src="scrist.js">   
+        </script>
+    </body>
+    </div>
+</html>
