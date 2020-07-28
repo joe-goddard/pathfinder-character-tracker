@@ -18,6 +18,7 @@ Desc: Program for DnD info and actions
         <div class="row">
             <div class="col-md">
             <h1>Actions</h1>
+        <div>
             <input id="aName" placeholder="Action Name" type="text"><br>
             <input id="aAMod" placeholder="Attack Mod" type="number">
             <input id="aAType" placeholder="Attack Type" type="text">
@@ -35,30 +36,48 @@ Desc: Program for DnD info and actions
             <p id="diceDisp"></p>
             <button>Clear Dice</button>
             <br><input id="aEffects" placeholder="Extra Effects" type="text"><br>
+        <div>
             <button>Save</button>
             <button>Roll Attack</button>
             <button>Roll Dam</button>
             <button>End Action</button>
-            <p id="toHitDisp"></p>
-            <p id="critDisp"></p>
-            <p id="damDisp"></p>
-            <p id="totalDisp"></p>
+            <p id="toHitDisp">[toHit]</p>
+            <p id="critDisp">[crit]</p>
+            <p id="damDisp">[dam]</p>
+            <p id="totalDisp">[total]</p>
+        </div>
             <button>Add Action</button>
+        </div>
             </div>
 
             <div class="col-md">
                 <h1>Information</h1>
+                <input id="infoSearch" placeholder="Sort Table" type="text">
+                <table>
+                    <tr><td><div contenteditable>[Info Name]</div></td><td><div contenteditable>[Enter Info Here]</div></td></tr>
+                    <tr><td><div contenteditable>[Info Name]</div></td><td><div contenteditable>[Enter Info Here]</div></td></tr>
+                    <tr><td><div contenteditable>[Info Name]</div></td><td><div contenteditable>[Enter Info Here]</div></td></tr>
+                    </table>
+                    <button>New Entry</button>
             </div>
 
             <div class="col-md">
                 <h1>Resources</h1>
+            <div>
                 <input id="rName" placeholder="Resource Name" type="text"><br>
                 <input id="rCurrent" placeholder="Current Value" type="number">
                 <p>/</p>
                 <input id="rMax" placeholder="Maximum Value" type="number">
                 <button>Add Resource</button>
+                <button>New Resource</button>
             </div>
             </div>
+            </div>
+        </div>
+        <div>
+            <h1>Select Character</h1>
+            <input id="cName" placeholder="Character Name" type="text">
+            <button>New Character</button>
         </div>
         <script src="scrist.js">   
         </script>
