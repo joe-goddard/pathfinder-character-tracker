@@ -9,12 +9,31 @@ Desc: Program for DnD info and actions
     <div>
     <head>
         <title>DnD Program</title>
+        <link rel="icon"
+        href="https://cdn.discordapp.com/attachments/611453754566508577/737707103447285830/0537b62be4e13d35ba37d1e62def400e.png">
         <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
         <link rel="stylesheet" href="fontawesome/css/all.css">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
     </head>
 
     <body>
-        <div class="container">
+        <script>
+            const firebaseConfig = {
+                apiKey: "AIzaSyC3N2nim9s-1wOI5L-T9SAtpWarNqDhL80",
+                authDomain: "dnd-program.firebaseapp.com",
+                databaseURL: "https://dnd-program.firebaseio.com",
+                projectId: "dnd-program",
+                storageBucket: "dnd-program.appspot.com",
+                messagingSenderId: "811076823933",
+                appId: "1:811076823933:web:7dfdad60f75749a1f87a14",
+                measurementId: "G-KF709JRHTB"
+            };
+          firebase.initializeApp(firebaseConfig);
+          </script>
+        <div class="container; hidden" id="main-screen">
         <div class="row">
             <div class="col-md">
             <h1>Actions</h1>
@@ -23,28 +42,27 @@ Desc: Program for DnD info and actions
             <input id="aAMod" placeholder="Attack Mod" type="number">
             <input id="aAType" placeholder="Attack Type" type="text">
             <input id="aRange" placeholder="Range" type="number"><br>
-            <input id="aCCMod" placeholder="Crit Confirm Mod" type="number">
+            <input id="aCCMod" placeholder="Crit Con Mod" type="number">
             <input id="aCMult" placeholder="Crit Mult" type="number">
             <input id="aCRange" placeholder="Crit Range" type="number"><br>
             <input id="aDMod" placeholder="Dam Mod" type="number"><br>
-            <input id="aDNum" placeholder="Num" type="number">
-            <p>d</p>
-            <input id="aDType" placeholder="Type" type="number">
-            <button>+</button>
-            <input type="radio" name="MultRad" id="rad">
+            <input id="aDNum" placeholder="Num" type="number" style="width: 16%;">
+            <span>d</span>
+            <input id="aDType" placeholder="Type" type="number" style="width: 16%;">
+            <input type="radio" name="MultRad" id="rad" style="width: 5%;">
             <label for="rad" id="radLabel">Multiply on Crit</label>
+            <button>+</button>
             <p id="diceDisp"></p>
             <button>Clear Dice</button>
             <br><input id="aEffects" placeholder="Extra Effects" type="text"><br>
         <div>
-            <button>Save</button>
             <button>Roll Attack</button>
             <button>Roll Dam</button>
-            <button>End Action</button>
             <p id="toHitDisp">[toHit]</p>
             <p id="critDisp">[crit]</p>
             <p id="damDisp">[dam]</p>
             <p id="totalDisp">[total]</p>
+            <button>End Action</button>
         </div>
             <button>Add Action</button>
         </div>
@@ -52,13 +70,8 @@ Desc: Program for DnD info and actions
 
             <div class="col-md">
                 <h1>Information</h1>
-                <input id="infoSearch" placeholder="Sort Table" type="text">
-                <table>
-                    <tr><td><div contenteditable>[Info Name]</div></td><td><div contenteditable>[Enter Info Here]</div></td></tr>
-                    <tr><td><div contenteditable>[Info Name]</div></td><td><div contenteditable>[Enter Info Here]</div></td></tr>
-                    <tr><td><div contenteditable>[Info Name]</div></td><td><div contenteditable>[Enter Info Here]</div></td></tr>
-                    </table>
-                    <button>New Entry</button>
+                <textarea rows="16" cols="38" id="info-box"></textarea><br>
+                <button id="save-info">Save Info</button>
             </div>
 
             <div class="col-md">
@@ -66,20 +79,22 @@ Desc: Program for DnD info and actions
             <div>
                 <input id="rName" placeholder="Resource Name" type="text"><br>
                 <input id="rCurrent" placeholder="Current Value" type="number">
-                <p>/</p>
-                <input id="rMax" placeholder="Maximum Value" type="number">
+                <span>/</span>
+                <input id="rMax" placeholder="Max Value" type="number">
                 <button>Add Resource</button>
-                <button>New Resource</button>
+                <button>New Resource</button><br>
+                <button>Save Resources</button>
             </div>
             </div>
             </div>
         </div>
-        <div>
+        <div id="cha-select" class="middle">
             <h1>Select Character</h1>
             <input id="cName" placeholder="Character Name" type="text">
-            <button>New Character</button>
+            <button id="new-cha">New Character</button>
+            <div id="cha-list"></div>
         </div>
-        <script src="scrist.js">   
+        <script src="script.js">   
         </script>
     </body>
     </div>
