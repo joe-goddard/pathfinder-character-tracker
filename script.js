@@ -1,5 +1,6 @@
 let charID;
-
+let reNum;
+let reNumG;
 class Characters{
     constructor(name, charID){
         this.name = name
@@ -62,6 +63,16 @@ class Store{
             data: document.querySelector('#info-box').value
         })
     }
+
+    static addResources(){
+        let resDB = firebase.database().ref(`resources/${charID}/res${reNum}`);
+        resDB.set({
+            name: document.querySelector('#rName'+reNum).value,
+            curVal: document.querySelector('#rCurrent'+reNum).value,
+            maxVal: document.querySelector('#rMax'+reNum).value
+            
+        })
+    }
 /** 
     static addAct(action, charID){
         let actionDB = firebase.database().ref(`actions/${charID}`);
@@ -84,21 +95,33 @@ class Store{
         return newActRef.key;
     }
     */
-    static getInfo(){
-        let infoDB = firebase.database().ref(`info`);
+    static getInfo(charID){
+        let infoDB = firebase.database().ref(`info/${charID}`);
         infoDB.once('value',snap =>{
                 snap.forEach(data=>{
                     let info = {}
                 info.id = data.key;
-                info.data = data.val().data
-                var text = document.createTextNode(info.data);
-                var element = document.querySelector('#info-box');
-                element.appendChild(text);
-                return element;
+                info.data = data.val()
+                document.querySelector('#info-box').innerHTML = info.data
                 })
             })
           }
-          
+          static getRes(charID, reNumG){
+            let resDB = firebase.database().ref(`resources/${charID}/res${reNumG}`);
+            resDB.once('value',snap =>{
+                    snap.forEach(data=>{
+                        let res = {}
+                    res.id = data.key;
+                    res.name = data.val()
+                    res.curVal = data.val()
+                    res.maxVal = data.val()
+                    if(res.id == 'name'){document.querySelector('#rName'+reNumG).value = res.name}
+                    if(res.id == 'curVal'){document.querySelector('#rCurrent'+reNumG).value = res.curVal}
+                    if(res.id == 'maxVal'){document.querySelector('#rMax'+reNumG).value = res.maxVal}
+                    })
+                })
+            }
+              
     static getChar(){
         let charDB = firebase.database().ref('characters');
         charDB.once('value',snap =>{
@@ -127,10 +150,31 @@ document.querySelector('#cha-list').addEventListener('click',(e)=>{
     let hide = document.querySelector('#cha-select')
     let show = document.querySelector('#main-screen')
     UI.hideShow(hide, show);
-    Store.getInfo()
+    Store.getInfo(charID)
+    reNumG = 1;
+    for (i = 0; i < 7; i++) {
+        Store.getRes(charID, reNumG)
+        reNumG++
+    }
+})
+document.querySelector('#new-act').addEventListener('click',(e)=>{
+    let hide = document.querySelector('#new-act')
+    let show = document.querySelector('#act-entry')
+    UI.hideShow(hide, show);
+})
+document.querySelector('#add-act').addEventListener('click',(e)=>{
+    let hide = document.querySelector('#act-entry')
+    let show = document.querySelector('#act-roll')
+    UI.hideShow(hide, show);
 })
 
 document.querySelector('#save-info').addEventListener('click',Store.addInfo);
+document.querySelector('#re-save1').addEventListener('click',(e)=>{reNum = 1;Store.addResources(reNum)})
+document.querySelector('#re-save2').addEventListener('click',(e)=>{reNum = 2;Store.addResources(reNum)})
+document.querySelector('#re-save3').addEventListener('click',(e)=>{reNum = 3;Store.addResources(reNum)})
+document.querySelector('#re-save4').addEventListener('click',(e)=>{reNum = 4;Store.addResources(reNum)})
+document.querySelector('#re-save5').addEventListener('click',(e)=>{reNum = 5;Store.addResources(reNum)})
+document.querySelector('#re-save6').addEventListener('click',(e)=>{reNum = 6;Store.addResources(reNum)})
 
 /**
 var dice = [

@@ -37,7 +37,7 @@ Desc: Program for DnD info and actions
         <div class="row">
             <div class="col-md">
             <h1>Actions</h1>
-        <div>
+        <div id="act-entry" class="hidden">
             <input id="aName" placeholder="Action Name" type="text"><br>
             <input id="aAMod" placeholder="Attack Mod" type="number">
             <input id="aAType" placeholder="Attack Type" type="text">
@@ -55,7 +55,8 @@ Desc: Program for DnD info and actions
             <p id="diceDisp"></p>
             <button>Clear Dice</button>
             <br><input id="aEffects" placeholder="Extra Effects" type="text"><br>
-        <div>
+            <button id="add-act">Add Action</button>
+        <div id="act-roll" class="hidden">
             <button>Roll Attack</button>
             <button>Roll Dam</button>
             <p id="toHitDisp">[toHit]</p>
@@ -64,8 +65,8 @@ Desc: Program for DnD info and actions
             <p id="totalDisp">[total]</p>
             <button>End Action</button>
         </div>
-            <button>Add Action</button>
         </div>
+        <button id="new-act">New Action</button>
             </div>
 
             <div class="col-md">
@@ -76,16 +77,42 @@ Desc: Program for DnD info and actions
 
             <div class="col-md">
                 <h1>Resources</h1>
-            <div>
-                <input id="rName" placeholder="Resource Name" type="text"><br>
-                <input id="rCurrent" placeholder="Current Value" type="number">
+            <div id="re-div">
+                <input id="rName1" placeholder="Resource Name" type="text"><br>
+                <input id="rCurrent1" placeholder="Current Value" type="number">
                 <span>/</span>
-                <input id="rMax" placeholder="Max Value" type="number">
-                <button>Add Resource</button>
-                <button>New Resource</button><br>
-                <button>Save Resources</button>
+                <input id="rMax1" placeholder="Max Value" type="number">
+                <button id="re-save1">Save</button><br><br>
+                <input id="rName2" placeholder="Resource Name" type="text"><br>
+                <input id="rCurrent2" placeholder="Current Value" type="number">
+                <span>/</span>
+                <input id="rMax2" placeholder="Max Value" type="number">
+                <button id="re-save2">Save</button><br><br>
+                <input id="rName3" placeholder="Resource Name" type="text"><br>
+                <input id="rCurrent3" placeholder="Current Value" type="number">
+                <span>/</span>
+                <input id="rMax3" placeholder="Max Value" type="number">
+                <button id="re-save3">Save</button><br><br>
+                <input id="rName4" placeholder="Resource Name" type="text"><br>
+                <input id="rCurrent4" placeholder="Current Value" type="number">
+                <span>/</span>
+                <input id="rMax4" placeholder="Max Value" type="number">
+                <button id="re-save4">Save</button><br><br>
+                <input id="rName5" placeholder="Resource Name" type="text"><br>
+                <input id="rCurrent5" placeholder="Current Value" type="number">
+                <span>/</span>
+                <input id="rMax5" placeholder="Max Value" type="number">
+                <button id="re-save5">Save</button><br><br>
+                <input id="rName6" placeholder="Resource Name" type="text"><br>
+                <input id="rCurrent6" placeholder="Current Value" type="number">
+                <span>/</span>
+                <input id="rMax6" placeholder="Max Value" type="number">
+                <button id="re-save6">Save</button><br>
+                
             </div>
+            
             </div>
+            
             </div>
         </div>
         <div id="cha-select" class="middle">
