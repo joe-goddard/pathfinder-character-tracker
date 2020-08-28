@@ -6,11 +6,12 @@ Date: 2020 - 07 - 27
 Desc: Program for DnD info and actions
 -->
 <html>
-    <div>
+<div>
+
     <head>
         <title>DnD Program</title>
         <link rel="icon"
-        href="https://cdn.discordapp.com/attachments/611453754566508577/737707103447285830/0537b62be4e13d35ba37d1e62def400e.png">
+            href="https://cdn.discordapp.com/attachments/611453754566508577/737707103447285830/0537b62be4e13d35ba37d1e62def400e.png">
         <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
         <link rel="stylesheet" href="fontawesome/css/all.css">
         <link rel="stylesheet" href="style.css">
@@ -31,88 +32,87 @@ Desc: Program for DnD info and actions
                 appId: "1:811076823933:web:7dfdad60f75749a1f87a14",
                 measurementId: "G-KF709JRHTB"
             };
-          firebase.initializeApp(firebaseConfig);
-          </script>
+            firebase.initializeApp(firebaseConfig);
+        </script>
         <div class="container; hidden" id="main-screen">
-        <div class="row">
-            <div class="col-md">
-            <h1>Actions</h1>
-        <div id="act-entry" class="hidden">
-            <input id="aName" placeholder="Action Name" type="text"><br>
-            <input id="aAMod" placeholder="Attack Mod" type="number">
-            <input id="aAType" placeholder="Attack Type" type="text">
-            <input id="aRange" placeholder="Range" type="number"><br>
-            <input id="aCCMod" placeholder="Crit Con Mod" type="number">
-            <input id="aCMult" placeholder="Crit Mult" type="number">
-            <input id="aCRange" placeholder="Crit Range" type="number"><br>
-            <input id="aDMod" placeholder="Dam Mod" type="number"><br>
-            <input id="aDNum" placeholder="Num" type="number" style="width: 16%;">
-            <span>d</span>
-            <input id="aDType" placeholder="Type" type="number" style="width: 16%;">
-            <input type="radio" name="MultRad" id="rad" style="width: 5%;">
-            <label for="rad" id="radLabel">Multiply on Crit</label>
-            <button>+</button>
-            <p id="diceDisp"></p>
-            <button>Clear Dice</button>
-            <br><input id="aEffects" placeholder="Extra Effects" type="text"><br>
-            <button id="add-act">Add Action</button>
-        <div id="act-roll" class="hidden">
-            <button>Roll Attack</button>
-            <button>Roll Dam</button>
-            <p id="toHitDisp">[toHit]</p>
-            <p id="critDisp">[crit]</p>
-            <p id="damDisp">[dam]</p>
-            <p id="totalDisp">[total]</p>
-            <button>End Action</button>
-        </div>
-        </div>
-        <button id="new-act">New Action</button>
-            </div>
+            <div class="row">
+                <div class="col-md">
+                    <h1>Actions</h1>
+                    <div id="act-entry" class="hidden">
+                        <input id="aName" placeholder="Action Name" type="text"><br>
+                        <input id="aAMod" placeholder="Attack Mod" type="number">
+                        <input id="aAType" placeholder="Attack Type" type="text">
+                        <input id="aRange" placeholder="Range" type="number"><br>
+                        <input id="aCCMod" placeholder="Crit Con Mod" type="number">
+                        <input id="aCMult" placeholder="Crit Mult" type="number">
+                        <input id="aCRange" placeholder="Crit Range" type="number"><br>
+                        <input id="aDMod" placeholder="Dam Mod" type="number"><br>
+                        <input id="aDNum" placeholder="Num" type="number" style="width: 16%;">
+                        <span>d</span>
+                        <input id="aDType" placeholder="Type" type="number" style="width: 16%;">
+                        <input type="radio" name="MultRad" id="rad" style="width: 5%;">
+                        <label for="rad" id="radLabel">Multiply on Crit</label>
+                        <button>+</button>
+                        <p id="diceDisp">1d3</p>
+                        <button>Clear Dice</button>
+                        <br><input id="aEffects" placeholder="Extra Effects" type="text"><br>
+                        <button id="add-act">Add Action</button>
+                        <div id="act-roll" class="hidden">
+                            <button>Roll Attack</button>
+                            <button>Roll Dam</button>
+                            <p id="toHitDisp">[toHit]</p>
+                            <p id="critDisp">[crit]</p>
+                            <p id="damDisp">[dam]</p>
+                            <p id="totalDisp">[total]</p>
+                            <button>End Action</button>
+                        </div>
+                    </div>
+                    <div id="act-list"></div>
+                    <button id="new-act">New Action</button>
+                    <p id="baka"></p>
+                </div>
 
-            <div class="col-md">
-                <h1>Information</h1>
-                <textarea rows="16" cols="38" id="info-box"></textarea><br>
-                <button id="save-info">Save Info</button>
-            </div>
+                <div class="col-md">
+                    <h1>Information</h1>
+                    <textarea rows="16" cols="38" id="info-box"></textarea><br>
+                    <button id="save-info">Save Info</button>
+                </div>
 
-            <div class="col-md">
-                <h1>Resources</h1>
-            <div id="re-div">
-                <input id="rName1" placeholder="Resource Name" type="text"><br>
-                <input id="rCurrent1" placeholder="Current Value" type="number">
-                <span>/</span>
-                <input id="rMax1" placeholder="Max Value" type="number">
-                <button id="re-save1">Save</button><br><br>
-                <input id="rName2" placeholder="Resource Name" type="text"><br>
-                <input id="rCurrent2" placeholder="Current Value" type="number">
-                <span>/</span>
-                <input id="rMax2" placeholder="Max Value" type="number">
-                <button id="re-save2">Save</button><br><br>
-                <input id="rName3" placeholder="Resource Name" type="text"><br>
-                <input id="rCurrent3" placeholder="Current Value" type="number">
-                <span>/</span>
-                <input id="rMax3" placeholder="Max Value" type="number">
-                <button id="re-save3">Save</button><br><br>
-                <input id="rName4" placeholder="Resource Name" type="text"><br>
-                <input id="rCurrent4" placeholder="Current Value" type="number">
-                <span>/</span>
-                <input id="rMax4" placeholder="Max Value" type="number">
-                <button id="re-save4">Save</button><br><br>
-                <input id="rName5" placeholder="Resource Name" type="text"><br>
-                <input id="rCurrent5" placeholder="Current Value" type="number">
-                <span>/</span>
-                <input id="rMax5" placeholder="Max Value" type="number">
-                <button id="re-save5">Save</button><br><br>
-                <input id="rName6" placeholder="Resource Name" type="text"><br>
-                <input id="rCurrent6" placeholder="Current Value" type="number">
-                <span>/</span>
-                <input id="rMax6" placeholder="Max Value" type="number">
-                <button id="re-save6">Save</button><br>
-                
-            </div>
-            
-            </div>
-            
+                <div class="col-md">
+                    <h1>Resources</h1>
+                    <div id="re-div">
+                        <input id="rName1" placeholder="Resource Name" type="text"><br>
+                        <input id="rCurrent1" placeholder="Current Value" type="number">
+                        <span>/</span>
+                        <input id="rMax1" placeholder="Max Value" type="number">
+                        <button id="re-save1">Save</button><br><br>
+                        <input id="rName2" placeholder="Resource Name" type="text"><br>
+                        <input id="rCurrent2" placeholder="Current Value" type="number">
+                        <span>/</span>
+                        <input id="rMax2" placeholder="Max Value" type="number">
+                        <button id="re-save2">Save</button><br><br>
+                        <input id="rName3" placeholder="Resource Name" type="text"><br>
+                        <input id="rCurrent3" placeholder="Current Value" type="number">
+                        <span>/</span>
+                        <input id="rMax3" placeholder="Max Value" type="number">
+                        <button id="re-save3">Save</button><br><br>
+                        <input id="rName4" placeholder="Resource Name" type="text"><br>
+                        <input id="rCurrent4" placeholder="Current Value" type="number">
+                        <span>/</span>
+                        <input id="rMax4" placeholder="Max Value" type="number">
+                        <button id="re-save4">Save</button><br><br>
+                        <input id="rName5" placeholder="Resource Name" type="text"><br>
+                        <input id="rCurrent5" placeholder="Current Value" type="number">
+                        <span>/</span>
+                        <input id="rMax5" placeholder="Max Value" type="number">
+                        <button id="re-save5">Save</button><br><br>
+                        <input id="rName6" placeholder="Resource Name" type="text"><br>
+                        <input id="rCurrent6" placeholder="Current Value" type="number">
+                        <span>/</span>
+                        <input id="rMax6" placeholder="Max Value" type="number">
+                        <button id="re-save6">Save</button><br>
+                    </div>
+                </div>
             </div>
         </div>
         <div id="cha-select" class="middle">
@@ -121,8 +121,9 @@ Desc: Program for DnD info and actions
             <button id="new-cha">New Character</button>
             <div id="cha-list"></div>
         </div>
-        <script src="script.js">   
+        <script src="script.js">
         </script>
     </body>
-    </div>
+</div>
+
 </html>
