@@ -13,7 +13,6 @@ Desc: Program for DnD info and actions
         <link rel="icon"
             href="https://cdn.discordapp.com/attachments/611453754566508577/737707103447285830/0537b62be4e13d35ba37d1e62def400e.png">
         <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
-        <link rel="stylesheet" href="fontawesome/css/all.css">
         <link rel="stylesheet" href="style.css">
         <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script>
@@ -52,19 +51,22 @@ Desc: Program for DnD info and actions
                         <input id="aDType" placeholder="Type" type="number" style="width: 16%;">
                         <input type="radio" name="MultRad" id="rad" style="width: 5%;">
                         <label for="rad" id="radLabel">Multiply on Crit</label>
-                        <button>+</button>
-                        <p id="diceDisp">1d3</p>
-                        <button>Clear Dice</button>
+                        <button id="add-die">+</button>
+                        <div id="diceDisp" data-arr='[]'></div>
+                        <button id="clear-dice">Clear Dice</button>
                         <br><input id="aEffects" placeholder="Extra Effects" type="text"><br>
+                        <button id="act-save">Save</button>
                         <button id="add-act">Add Action</button>
+                        <input id="inv-die" class="hidden">
                         <div id="act-roll" class="hidden">
-                            <button>Roll Attack</button>
-                            <button>Roll Dam</button>
-                            <p id="toHitDisp">[toHit]</p>
-                            <p id="critDisp">[crit]</p>
-                            <p id="damDisp">[dam]</p>
-                            <p id="totalDisp">[total]</p>
-                            <button>End Action</button>
+                            <button id="roll-att">Roll Attack</button>
+                            <button id="roll-dam">Roll Dam</button>
+                            <p id="toHitDisp">[To Hit Result]</p>
+                            <p id="critDisp">[Critical Confirm Result]</p>
+                            <p id="damDisp">[Damage Dice Result]</p>
+                            <p id="totalDisp">[Total Damage Result]<br>[ Critical Damage Result]</p>
+                            <button id="end-act">End Action</button>
+                            <br><br><button id="del-act">Delete Action</button>
                         </div>
                     </div>
                     <div id="act-list"></div>
@@ -74,11 +76,13 @@ Desc: Program for DnD info and actions
 
                 <div class="col-md">
                     <h1>Information</h1>
-                    <textarea rows="16" cols="38" id="info-box"></textarea><br>
+                    <textarea rows="16" cols="46" id="info-box"></textarea><br>
                     <button id="save-info">Save Info</button>
                 </div>
 
                 <div class="col-md">
+                    <button class="rightbottom" onclick="location.reload()">Character List</button>
+                    <button class="righttop" id="del-cha">Delete Character</button>
                     <h1>Resources</h1>
                     <div id="re-div">
                         <input id="rName1" placeholder="Resource Name" type="text"><br>
@@ -114,6 +118,7 @@ Desc: Program for DnD info and actions
                     </div>
                 </div>
             </div>
+            
         </div>
         <div id="cha-select" class="middle">
             <h1>Select Character</h1>
@@ -121,6 +126,8 @@ Desc: Program for DnD info and actions
             <button id="new-cha">New Character</button>
             <div id="cha-list"></div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <script src="script.js">
         </script>
     </body>

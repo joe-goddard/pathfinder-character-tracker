@@ -4,6 +4,7 @@ let reNum;
 let reNumG;
 let hide;
 let show;
+let die = [];
 class Characters {
     constructor(name, charID) {
         this.name = name
@@ -87,10 +88,26 @@ class Store {
             critMult: document.querySelector('#aCMult').value,
             critRange: document.querySelector('#aCRange').value,
             damMod: document.querySelector('#aDMod').value,
-            dieList: document.querySelector('#diceDisp').innerHTML,
+            dieList: $('#diceDisp').data('arr'),
             extra: document.querySelector('#aEffects').value
         })
         return newActRef.key;
+    }
+
+    static upAct(charID) {
+        let actionDB = firebase.database().ref(`actions/${charID}/${actID}`);
+        actionDB.set({
+            name: document.querySelector('#aName').value,
+            atMod: document.querySelector('#aAMod').value,
+            atType: document.querySelector('#aAType').value,
+            range: document.querySelector('#aRange').value,
+            critMod: document.querySelector('#aCCMod').value,
+            critMult: document.querySelector('#aCMult').value,
+            critRange: document.querySelector('#aCRange').value,
+            damMod: document.querySelector('#aDMod').value,
+            dieList: $('#diceDisp').data('arr'),
+            extra: document.querySelector('#aEffects').value
+        })
     }
 
     static getInfo(charID) {
@@ -135,6 +152,36 @@ class Store {
             })
         })
     }
+    static getActCal(actID) {
+        let actionDB = firebase.database().ref(`actions/${charID}/${actID}`);
+        actionDB.once('value', snap => {
+            snap.forEach(data => {
+                let actions = {}
+                actions.id = data.key;
+                actions.name = data.val()
+                actions.atMod = data.val()
+                actions.atType = data.val()
+                actions.range = data.val()
+                actions.critMod = data.val()
+                actions.critMult = data.val()
+                actions.critRange = data.val()
+                actions.damMod = data.val()
+                actions.dieList = data.val()
+                actions.extra = data.val()
+                if (actions.id == 'name') { document.querySelector('#aName').value = actions.name }
+                if (actions.id == 'atMod') { document.querySelector('#aAMod').value = actions.atMod }
+                if (actions.id == 'atType') { document.querySelector('#aAType').value = actions.atType }
+                if (actions.id == 'range') { document.querySelector('#aRange').value = actions.range }
+                if (actions.id == 'critMod') { document.querySelector('#aCCMod').value = actions.critMod }
+                if (actions.id == 'critMult') { document.querySelector('#aCMult').value = actions.critMult }
+                if (actions.id == 'critRange') { document.querySelector('#aCRange').value = actions.critRange }
+                if (actions.id == 'damMod') { document.querySelector('#aDMod').value = actions.damMod }
+                if (actions.id == 'dieList') { die = JSON.parse(actions.dieList) }
+
+                if (actions.id == 'extra') { document.querySelector('#aEffects').value = actions.extra }
+            })
+        })
+    }
     static getChar() {
         let charDB = firebase.database().ref('characters');
         charDB.once('value', snap => {
@@ -151,14 +198,29 @@ class Store {
             })
         })
     }
+    static deleteDice(charID, actID) {
+        firebase.database().ref(`actions/${charID}/${actID}/dieList`).remove();
+    }
+    static deleteAction(charID, actID) {
+        firebase.database().ref(`actions/${charID}/${actID}`).remove();
+    }
+    static deleteCharacter(charID) {
+        firebase.database().ref(`characters/${charID}`).remove();
+        firebase.database().ref(`info/${charID}`).remove();
+        firebase.database().ref(`resources/${charID}`).remove();
+        firebase.database().ref(`actions/${charID}`).remove();
+    }
 }
 document.addEventListener('DOMContentLoaded', Store.getChar);
 
 document.querySelector('#new-cha').addEventListener('click', (e) => {
+    if (document.querySelector('#cName').value !== "") {
     Store.addChar(name);
     location.reload();
+    }
 })
 document.querySelector('#cha-list').addEventListener('click', (e) => {
+    if(event.target.id !== "cha-list") {
     charID = event.target.id;
     hide = document.querySelector('#cha-select');
     show = document.querySelector('#main-screen');
@@ -170,6 +232,22 @@ document.querySelector('#cha-list').addEventListener('click', (e) => {
         Store.getRes(charID, reNumG);
         reNumG++;
     }
+}
+})
+document.querySelector('#act-list').addEventListener('click', (e) => {
+    if(event.target.id !== "act-list") {
+    actID = event.target.id;
+    hide = document.querySelector('#act-list');
+    show = document.querySelector('#act-entry');
+    UI.hideShow(hide, show);
+    hide = document.querySelector('#new-act');
+    show = document.querySelector('#act-roll');
+    UI.hideShow(hide, show);
+    hide = document.querySelector('#add-act');
+    show = document.querySelector('#baka');
+    UI.hideShow(hide, show);
+    Store.getActCal(actID);
+    }
 })
 document.querySelector('#new-act').addEventListener('click', (e) => {
     hide = document.querySelector('#act-list');
@@ -178,9 +256,25 @@ document.querySelector('#new-act').addEventListener('click', (e) => {
     hide = document.querySelector('#new-act');
     show = document.querySelector('#baka');
     UI.hideShow(hide, show);
+    hide = document.querySelector('#act-save');
+    show = document.querySelector('#baka');
+    UI.hideShow(hide, show);
+    hide = document.querySelector('#baka');
+    show = document.querySelector('#add-act');
+    UI.hideShow(hide, show);
+    hide = document.querySelector('#act-roll');
+    show = document.querySelector('#baka');
+    UI.hideShow(hide, show);
+    hide = document.querySelector('#clear-dice');
+    show = document.querySelector('#baka');
+    UI.hideShow(hide, show);
+    
 })
 document.querySelector('#add-act').addEventListener('click', (e) => {
-    document.querySelector('#act-list').innerHTML = " "
+    if (document.querySelector('#aName').value !== ""){
+    document.querySelector('#act-list').innerHTML = " ";
+    die = JSON.stringify(die)
+    $('#diceDisp').data('arr', die)
     Store.addAct(charID);
     Store.getAct(charID);
     hide = document.querySelector('#act-entry');
@@ -189,6 +283,37 @@ document.querySelector('#add-act').addEventListener('click', (e) => {
     hide = document.querySelector('#baka');
     show = document.querySelector('#new-act');
     UI.hideShow(hide, show);
+    hide = document.querySelector('#baka');
+    show = document.querySelector('#clear-dice');
+    UI.hideShow(hide, show);
+    hide = document.querySelector('#baka');
+    show = document.querySelector('#act-save');
+    UI.hideShow(hide, show);
+    
+    }
+})
+document.querySelector('#end-act').addEventListener('click', (e) => {
+    hide = document.querySelector('#act-entry');
+    show = document.querySelector('#act-list');
+    UI.hideShow(hide, show);
+    hide = document.querySelector('#baka');
+    show = document.querySelector('#new-act');
+    UI.hideShow(hide, show);
+})
+document.querySelector('#add-die').addEventListener('click', (e) => {
+    if (typeof die == "string") { die = JSON.parse(die);}
+    let num = document.querySelector('#aDNum').value;
+    let type = document.querySelector('#aDType').value;
+    let rad = document.querySelector('#rad').checked;
+    if (rad == true) { rad = 1 }
+    else { rad = 0 }
+    die.push([parseInt(num), parseInt(type), rad]);
+    document.querySelector('#rad').checked = false;
+})
+document.querySelector('#act-save').addEventListener('click', (e) => {
+    die = JSON.stringify(die)
+    $('#diceDisp').data('arr', die)
+    Store.upAct(charID)
 })
 
 document.querySelector('#save-info').addEventListener('click', Store.addInfo);
@@ -199,39 +324,66 @@ document.querySelector('#re-save4').addEventListener('click', (e) => { reNum = 4
 document.querySelector('#re-save5').addEventListener('click', (e) => { reNum = 5; Store.addResources(reNum) });
 document.querySelector('#re-save6').addEventListener('click', (e) => { reNum = 6; Store.addResources(reNum) });
 
-/**
-var dice = [
-    [1, 2, 1],
-    [3, 4, 0],
-    [5, 6, 1],
-    [2, 10, 0],
-  ];
-var atCritFail = false;
-var atCritSuccess = false;
-var atMod = 1;
-var critMod = 1;
-var damMod = 1;
-var critMult = 2;
-var critRange = 3;
-var attack = Math.floor(Math.random() * 20) + 1;
-if (attack == 1) {
-    atCritFail = true;
-}
-if (attack == 20){
-    atCritSuccess = true;
-}
-if (attack > 20 - 3) {
-var critConfirm = Math.floor(Math.random() * 20) + 1;
-critConfirm = critConfirm + atMod + critMod;
-}
-attack = attack + atMod;
-for (i = 0; i < dice.length; i++) {
-    for (j = 0; j < dice[i][0]; j++) {
-var damageDie = Math.floor(Math.random() * dice[i][1]) + 1;
-}
-}
+document.querySelector('#clear-dice').addEventListener('click', (e) => {
+    Store.deleteDice(charID, actID)
+})
+document.querySelector('#del-act').addEventListener('click', (e) => {
+    Store.deleteAction(charID, actID)
+    Store.getAct(charID);
+    document.querySelector('#act-list').innerHTML = " ";
+    hide = document.querySelector('#act-entry');
+    show = document.querySelector('#act-list');
+    UI.hideShow(hide, show);
+    hide = document.querySelector('#baka');
+    show = document.querySelector('#new-act');
+    UI.hideShow(hide, show);
+})
+document.querySelector('#del-cha').addEventListener('click', (e) => {
+    Store.deleteCharacter(charID)
+    location.reload()
+})
 
-var damage = damageDie + damMod
-var crit = damageDie * critMult
-var critDam = crit + damMod
-*/
+document.querySelector('#roll-att').addEventListener('click', (e) => {
+    if (typeof die == "string") { die = JSON.parse(die); }
+    let atMod = document.querySelector('#aAMod').value;
+    let critMod = document.querySelector('#aCCMod').value;
+    let critRange = document.querySelector('#aCRange').value;
+    let attack = Math.floor(Math.random() * 20) + 1;
+    document.querySelector('#toHitDisp').innerHTML = attack;
+    if (attack > 20 - critRange) {
+        let critConfirm = Math.floor(Math.random() * 20) + 1;
+        document.querySelector('#critDisp').innerHTML = critConfirm;
+        critConfirm = critConfirm + parseInt(atMod) + parseInt(critMod);
+        document.querySelector('#critDisp').innerHTML += " (" + critConfirm + ")";
+    }
+    else {
+        document.querySelector('#critDisp').innerHTML = "[Critical Confirm Result]"
+    }
+    attack = attack + parseInt(atMod);
+    document.querySelector('#toHitDisp').innerHTML += " (" + attack + ")";
+})
+document.querySelector('#roll-dam').addEventListener('click', (e) => {
+    if (typeof die == "string") { die = JSON.parse(die); }
+    console.log(die)
+    let damageDieYMult = 0;
+    let damageDieNMult = 0;
+    let damMod = document.querySelector('#aDMod').value;
+    let critMult = document.querySelector('#aCMult').value;
+    document.querySelector('#damDisp').innerHTML = " "
+    for (i = 0; i < die.length; i++) {
+        for (j = 0; j < die[i][0]; j++) {
+            let dieRoll = Math.floor(Math.random() * die[i][1]) + 1;
+            document.querySelector('#damDisp').innerHTML += dieRoll + ", ";
+            if (die[i][2] == 1) {
+                damageDieYMult = damageDieYMult + dieRoll;
+            }
+            else {
+                damageDieNMult = damageDieNMult + dieRoll;
+            }
+        }
+    }
+    let damage = parseInt(damageDieYMult) + parseInt(damageDieNMult) + parseInt(damMod);
+    let crit = parseInt(damageDieYMult) * parseInt(critMult);
+    let critDam = parseInt(crit) + parseInt(damageDieNMult) + parseInt(damMod);
+    document.querySelector('#totalDisp').innerHTML = "Base Total: " + damage + "<br>" + "Critical Total: " + critDam
+})

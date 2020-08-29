@@ -1,3 +1,6 @@
+body {
+    overflow-x: hidden;
+}
 input{
     width: 32.6%;
     margin: 0cm;
@@ -7,4 +10,14 @@ input{
 }
 .middle {
     text-align: center
+}
+.righttop {
+    position: absolute;
+    top: 1%;
+    right: 5%;
+}
+.rightbottom {
+    position: absolute;
+    top: 50px;
+    right: 5%;
 }
